@@ -12,18 +12,20 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		<link rel="icon" href="{% static 'images/smart_spi.ico' %}" type="image/x-icon" />
 	</head>
 	
 	<body class="landing">
 
 		<!-- Header -->
 			<header id="header" class="alt">
-				<h1><strong><a href="index.html">SMART-SPI</a></strong> data analysis for SPI</h1>
+				<h1><strong><a href=/">SMART-SPI</a></strong> data analysis for SPI</h1>
 				<nav id="nav">
 					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li><a href="generic.html">Projects</a></li>
-						<li><a href="elements.html">Milestones</a></li>
+						<li><a href="/">Home</a></li>
+						<li><a href="/projects">Projects</a></li>
+						<li><a href="/milestones">Milestones</a></li>
+
 					</ul>
 				</nav>
 			</header>
@@ -31,6 +33,7 @@
 			<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 
 		{% block content %}
+
 		{% endblock %}
 
 		<!-- Footer -->
@@ -42,9 +45,8 @@
 						<li><a href="https://instagram.com/freddyiniguez" target="_blank" class="icon fa-instagram"></a></li>
 					</ul>
 					<ul class="copyright">
-						<li>&copy; Untitled</li>
+						<li>&copy; SMART-SPI, 2017</li>
 						<li>Design: <a href="http://templated.co">TEMPLATED</a></li>
-						<li>Images: <a href="http://unsplash.com">Unsplash</a></li>
 					</ul>
 				</div>
 			</footer>
