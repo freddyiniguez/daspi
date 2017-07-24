@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'smart_spi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'smart_spi',
-	'USER': 'root',
-	'PASSWORD': 'SQl11386703.',
-	'HOST':'localhost',
-	'PORT': '3306',
+        'NAME': 'smartspi',
+    	'USER': 'smartspi',
+    	'PASSWORD': 'smartspi',
+    	'HOST':'localhost',
+    	'PORT': '3306',
     }
 }
 
