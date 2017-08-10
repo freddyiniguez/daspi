@@ -17,7 +17,11 @@
 					<form method="POST" class="project-form">{% csrf_token %}
 
 						{{ form.as_p }}
-						<button type="submit" class="special">Save</button>
+						<ul class="actions pull-right">
+							<button type="submit" class="button special">Save</button>
+							<li><a href="{% url 'projects_list' %}" class="button">Back</a></li>
+						</ul>
+
 					</form>
 				</section>
 		</div>

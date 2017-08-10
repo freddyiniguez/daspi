@@ -21,11 +21,6 @@ def projects(request):
 	projects = Project.objects.all()
 	return render(request, 'tool/projects.html', {'projects' : projects})
 
-# Returns a project details
-def project_detail(request, pk):
-	project = get_object_or_404(Project, pk=pk)
-	return render(request, 'tool/project_detail.html', {'project' : project})
-
 # Creates a new project
 def project_new(request):
 	if request.method == 'POST':
@@ -39,6 +34,16 @@ def project_new(request):
 		form = ProjectForm()
 	return render(request, 'tool/project_new.html', {'form' : form})
 
+# Returns project details
+def project_detail(request, pk):
+	project = get_object_or_404(Project, pk=pk)
+	return render(request, 'tool/project_detail.html', {'project' : project})
+
+# Deletes project
+def project_delete(request, pk):
+	project = get_object_or_404(Project, pk=pk)
+	project.delete()
+	return redirect('projects_list')
 
 # - - - T E M P O R A L - - - 
 # A temporal link to see the available HTML theme elements
