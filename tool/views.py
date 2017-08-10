@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Project
+from .forms import ProjectForm
 
 
 # - - - H O M E - - -
@@ -27,7 +28,16 @@ def project_detail(request, pk):
 
 # Creates a new project
 def project_new(request):
-	return render(request, 'tool/project_new.html', {})
+	if request.method == 'POST':
+		form = ProjectForm(request.POST)
+		if form.is_valid():
+			project = form.save(commit = False)
+			project.author = request.user
+			project.save()
+			return redirect('projects_list')
+	else:
+		form = ProjectForm()
+	return render(request, 'tool/project_new.html', {'form' : form})
 
 
 # - - - T E M P O R A L - - - 

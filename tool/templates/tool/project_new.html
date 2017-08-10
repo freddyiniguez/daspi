@@ -1,1 +1,25 @@
-New project
+{% extends 'tool/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<!-- Main -->
+	<section id="main" class="wrapper">
+		<div class="container">
+
+			<header class="major special">
+				<h2>New project</h2>
+				<p align="justify">Provide some details to create a new project</p>
+			</header>
+
+			<!-- Form -->
+				<section>
+					<h3>Project details</h3>
+					<form method="POST" class="project-form">{% csrf_token %}
+
+						{{ form.as_p }}
+						<button type="submit" class="special">Save</button>
+					</form>
+				</section>
+		</div>
+	</section>
+{% endblock %}
