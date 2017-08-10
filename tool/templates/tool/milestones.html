@@ -1,105 +1,104 @@
 {% extends 'tool/base.html' %}
 {% load staticfiles %}
 
-		{% block content %}
-		<!-- Main -->
-			<section id="main" class="wrapper">
-				<div class="container">
-					<header class="major special">
-						<h2>Milestones</h2>
-						<p>See the purpose of each phase in the SMART-SPI model</p>
-					</header>
+{% block content %}
+<!-- Main -->
+	<section id="main" class="wrapper">
+		<div class="container">
+			<header class="major special">
+				<h2>Milestones</h2>
+				<p>See the purpose of each phase in the SMART-SPI model</p>
+			</header>
 
-					<div class="image fit captioned">
-						<img src="{% static 'images/smart_spi.png' %}" alt="SMART-SPI Milestones diagram" />
+			<div class="image fit captioned">
+				<img src="{% static 'images/smart_spi.png' %}" alt="SMART-SPI Milestones diagram" />
+			</div>
+
+			<!-- Milestones description -->
+			<section>
+				<div class="row">
+					<div class="12u$(xsmall)">
+						<h4>Phase S</h4>
+						<ul>
+							<li>
+								<p align="justify">
+									This phase has two milestones: 1) to create a strategy for the SPI initiative, formalizing and using the business goals, and 2) to identify the internal best practices by the application of questionnaires.
+								</p>
+							</li>
+						</ul>
+
+						<h4>Phase M</h4>
+						<ul>
+							<li>
+								<p align="justify">
+									Three milestones are intended to be accomplish during the development of M phase: 1) to create a fulfillment matrix, which emphasizes which business goals are address with some specific practices, 2) to identify the most significant process areas for the business in order to have the greatest impact when applying the SPI initiative, and 3) to provide details about the datasets using a data sheet.
+								</p>
+							</li>
+						</ul>
+
+						<h4>Phase A</h4>
+						<ul>
+							<li>
+								<p align="justify">
+									Milestones for this phase are: 1) to provide some guidelines to help practitioners in the data cleansing and storage process, 2) to provide some guidelines for the selection of the most appropriate data analysis technique, and 3) to analyze process information using the selected data analysis technique.
+								</p>
+							</li>
+						</ul>
+
+						<h4>Phase R</h4>
+						<ul>
+							<li>
+								<p align="justify">
+									For R phase, two milestones have been defined: 1) to provide some guidelines that help practitioners to select the most appropriate data visualizations tools according to the kind of available data, and 2) to provide some guidelines to communicate the results of the data analysis process in a way most of the stakeholders can understand.
+								</p>
+							</li>
+						</ul>
+
+						<h4>Phase T</h4>
+						<ul>
+							<li>
+								<p align="justify">
+									The unique milestone for this phase is to identify external best practices from a multi-model environment in order to have some practices from other methodologies, models, and standards for software development that help to fulfill with the current business goals.
+								</p>
+							</li>
+						</ul>
+
+						<h4>Phase S'</h4>
+						<ul>
+							<li>
+								<p align="justify">
+									Two milestones have been identified for this phase: 1) to update and review the fulfillment matrix in order to 2) evaluate the accomplishment of business goals.
+								</p>
+							</li>
+						</ul>
+
+						<h4>Phase P</h4>
+						<ul>
+							<li>
+								<p align="justify">
+									P phase's milestones are: 1) to perform some postmortem questionnaires in order to obtain feedback for the SPI initiative and 2) to create a document of business decisions that help the organization to reach its mission.
+								</p>
+							</li>
+						</ul>
+
+						<h4>Phase I</h4>
+						<ul>
+							<li>
+								<p align="justify">
+									The only milestone for this phase is to implement the SPI initiative by adopting the best internal and external best practices that have been identified.
+								</p>
+							</li>
+						</ul>
+
+						<br>
+
+						<ul class="actions">
+							<p align="center"><a href="/projects" class="button special big">Start a project</a></p>
+						</ul>
 					</div>
-
-					<!-- Milestones description -->
-					<section>
-						<div class="row">
-							<div class="12u$(xsmall)">
-								<h4>Phase S</h4>
-								<ul>
-									<li>
-										<p align="justify">
-											This phase has two milestones: 1) to create a strategy for the SPI initiative, formalizing and using the business goals, and 2) to identify the internal best practices by the application of questionnaires.
-										</p>
-									</li>
-								</ul>
-
-								<h4>Phase M</h4>
-								<ul>
-									<li>
-										<p align="justify">
-											Three milestones are intended to be accomplish during the development of M phase: 1) to create a fulfillment matrix, which emphasizes which business goals are address with some specific practices, 2) to identify the most significant process areas for the business in order to have the greatest impact when applying the SPI initiative, and 3) to provide details about the datasets using a data sheet.
-										</p>
-									</li>
-								</ul>
-
-								<h4>Phase A</h4>
-								<ul>
-									<li>
-										<p align="justify">
-											Milestones for this phase are: 1) to provide some guidelines to help practitioners in the data cleansing and storage process, 2) to provide some guidelines for the selection of the most appropriate data analysis technique, and 3) to analyze process information using the selected data analysis technique.
-										</p>
-									</li>
-								</ul>
-
-								<h4>Phase R</h4>
-								<ul>
-									<li>
-										<p align="justify">
-											For R phase, two milestones have been defined: 1) to provide some guidelines that help practitioners to select the most appropriate data visualizations tools according to the kind of available data, and 2) to provide some guidelines to communicate the results of the data analysis process in a way most of the stakeholders can understand.
-										</p>
-									</li>
-								</ul>
-
-								<h4>Phase T</h4>
-								<ul>
-									<li>
-										<p align="justify">
-											The unique milestone for this phase is to identify external best practices from a multi-model environment in order to have some practices from other methodologies, models, and standards for software development that help to fulfill with the current business goals.
-										</p>
-									</li>
-								</ul>
-
-								<h4>Phase S'</h4>
-								<ul>
-									<li>
-										<p align="justify">
-											Two milestones have been identified for this phase: 1) to update and review the fulfillment matrix in order to 2) evaluate the accomplishment of business goals.
-										</p>
-									</li>
-								</ul>
-
-								<h4>Phase P</h4>
-								<ul>
-									<li>
-										<p align="justify">
-											P phase's milestones are: 1) to perform some postmortem questionnaires in order to obtain feedback for the SPI initiative and 2) to create a document of business decisions that help the organization to reach its mission.
-										</p>
-									</li>
-								</ul>
-
-								<h4>Phase I</h4>
-								<ul>
-									<li>
-										<p align="justify">
-											The only milestone for this phase is to implement the SPI initiative by adopting the best internal and external best practices that have been identified.
-										</p>
-									</li>
-								</ul>
-
-								<br>
-
-								<ul class="actions">
-									<p align="center"><a href="/projects" class="button special big">Start a project</a></p>
-								</ul>
-							</div>
-							
-						</div>
-					</section>
+					
 				</div>
 			</section>
-		{% endblock content %}
-</html>
+		</div>
+	</section>
+{% endblock content %}

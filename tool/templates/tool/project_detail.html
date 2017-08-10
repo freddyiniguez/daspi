@@ -1,1 +1,17 @@
-Project detail 
+{% extends 'tool/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<!-- Main -->
+	<section id="main" class="wrapper">
+		<div class="container">
+
+			<header class="major special">
+				<h2>{{ project.title }}</h2>
+				<p align="justify">{{ project.description }}</p>
+			</header>
+
+			<p>Something here</p>
+		</div>
+	</section>
+{% endblock %}

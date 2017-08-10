@@ -1,50 +1,49 @@
 {% extends 'tool/base.html' %}
 {% load staticfiles %}
 
-		{% block content %}
-		<!-- Main -->
-			<section id="main" class="wrapper">
-				<div class="container">
+{% block content %}
+<!-- Main -->
+	<section id="main" class="wrapper">
+		<div class="container">
 
-					<header class="major special">
-						<h2>Projects</h2>
-						<p>Create a project and start capturing data</p>
-					</header>
+			<header class="major special">
+				<h2>Projects</h2>
+				<p>Create a project and start capturing data</p>
+			</header>
 
-					<!-- Table -->
-						<section>
-							<h3>Current projects</h3>
-							<div class="table-wrapper">
-								<table>
-									<thead>
-										<tr>
-											<th>Title</th>
-											<th>Description</th>
-											<th>Company</th>
-											<th>Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-										{% for project in projects %}
-											<tr>
-												<td>{{ project.title }}</td>
-												<td>{{ project.description }}</td>
-												<td>{{ project.company }}</td>
-												<td><a href="{% url 'project_detail' pk=project.pk %}" class="button alt small"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-											</tr>
-										{% endfor %}
-									</tbody>
-								</table>
+			<!-- Table -->
+				<section>
+					<h3>Current projects</h3>
+					<div class="table-wrapper">
+						<table>
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th>Description</th>
+									<th>Company</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for project in projects %}
+									<tr>
+										<td>{{ project.title }}</td>
+										<td>{{ project.description }}</td>
+										<td>{{ project.company }}</td>
+										<td><a href="{% url 'project_detail' pk=project.pk %}" class="button alt small"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
 
-							</div>
-							<div class="12u$">
-								<ul class="actions pull-right">
-									<li><a href="{% url 'project_new' %}" class="button special">Create project</a></li>
-									<li><a href="/" class="button">Back</a></li>
-								</ul>
-							</div>
-						</section>
-				</div>
-			</section>
-		{% endblock content %}
-</html>
+					</div>
+					<div class="12u$">
+						<ul class="actions pull-right">
+							<li><a href="{% url 'project_new' %}" class="button special">Create project</a></li>
+							<li><a href="/" class="button">Back</a></li>
+						</ul>
+					</div>
+				</section>
+		</div>
+	</section>
+{% endblock content %}
