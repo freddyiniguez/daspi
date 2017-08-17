@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Project
 from .forms import ProjectForm
 
@@ -17,11 +18,13 @@ def milestones(request):
 
 # - - - P R O J E C T S - - - 
 # Projects creation, capture of process information and data analysis and visualization
+@login_required
 def projects(request):
 	projects = Project.objects.all()
 	return render(request, 'tool/projects.html', {'projects' : projects})
 
 # Creates a new project
+@login_required
 def project_new(request):
 	if request.method == 'POST':
 		form = ProjectForm(request.POST)
@@ -35,6 +38,7 @@ def project_new(request):
 	return render(request, 'tool/project_new.html', {'form' : form})
 
 # Returns project details
+@login_required
 def project_detail(request, pk):
 	project = get_object_or_404(Project, pk=pk)
 	return render(request, 'tool/project_detail.html', {'project' : project})

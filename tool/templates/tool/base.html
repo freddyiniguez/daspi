@@ -18,19 +18,27 @@
 	<body>
 
 		<!-- Header -->
-			<header id="header">
+			<header id="header">	
 				<h1><strong><a href="/">SMART-SPI</a></strong> data analysis for SPI</h1>
 				<nav id="nav">
 					<ul>
 						<li><a href="/">Home</a></li>
 						<li><a href="/projects">Projects</a></li>
 						<li><a href="/milestones">Milestones</a></li>
-
+						<li>
+							{% if user.is_authenticated %}
+								<p>{{ user.username }} <small>(<a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i></a>)</small></p>
+							{% else %}
+								<p>Login <small>(<a href="{% url 'login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i></a>)</small></p>
+							{% endif %}
+						</li>
 					</ul>
 				</nav>
+				
 			</header>
 
 			<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+
 
 		{% block content %}
 
