@@ -13,7 +13,8 @@
 
 			<!-- Table: Estimates -->
 				<section>
-					<h3>Current estimates</h3>
+					<h3>Estimates</h3>
+					<p>Current estimates for this project</p>
 					<div class="table-wrapper">
 						<table>
 							<thead>
@@ -25,7 +26,6 @@
 									<th>Required hours (AVG)</th>
 								</tr>
 							</thead>
-							
 							<tbody>
 								{% for estimate in project.estimates.all %}
 									<tr>
@@ -34,6 +34,14 @@
 										<td>{{ estimate.complexity }}</td>
 										<td>{{ estimate.role }}</td>
 										<td>{{ estimate.required_hours }}</td>
+									</tr>
+								{% empty %}
+									<tr>
+										<td>There are no estimares yet</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
 									</tr>
 								{% endfor %}
 							</tbody>
@@ -58,7 +66,100 @@
 					</div>
 				</section>
 
+				<br>
+				<br>
+
 			<!-- Table: Tasks -->
+				<section>
+					<h3>Tasks</h3>
+					<p>Current tasks for this project</p>
+					<div class="table-wrapper">
+						<table>
+							<thead>
+								<tr>
+									<th>Task</th>
+									<th>Phase/Workflow</th>
+									<th>Type</th>
+									<th>Complexity</th>
+									<th>Percentage of completion</th>
+									<th>Planned hours</th>
+									<th>Real hours</th>
+									<th>Planned cost</th>
+									<th>Real cost</th>
+									<th>Planned start date</th>
+									<th>Planned end date</th>
+									<th>Real start date</th>
+									<th>Real end date</th>
+									<th>Resources</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for task in project.tasks.all %}
+									<tr>
+										<td>{{ task.task }}</td>
+										<td>{{ task.phase }}</td>
+										<td>{{ task.type }}</td>
+										<td>{{ task.task_complexity }}</td>
+										<td>{{ task.percentage_of_completion }}</td>
+										<td>{{ task.planned_hours }}</td>
+										<td>{{ task.real_hours }}</td>
+										<td>{{ task.planned_cost }}</td>
+										<td>{{ task.real_cost }}</td>
+										<td>{{ task.planned_start_date }}</td>
+										<td>{{ task.planned_end_date }}</td>
+										<td>{{ task.real_start_date }}</td>
+										<td>{{ task.real_end_date }}</td>
+										<td>{{ task.resource }}</td>
+									</tr>
+								{% empty %}
+									<tr>
+										<td>There are no task yet</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								{% endfor %}
+							</tbody>
+							<tfoot>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>
+										<!-- ADD THE URL ACTION TO NEW TASK -->
+										<a href="" class="button special small" title="Add task to current project"><i class="fa fa-plus" aria-hidden="true"></i> Add task</a>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="12u$">
+						<ul class="actions pull-right">
+							<li><a href="/" class="button special">Visualize data</a></li>
+							<li><a href="/projects" class="button">Back</a></li>
+						</ul>
+					</div>
+				</section>
 
 			<!-- Table: Effort/Cost -->
 		</div>
