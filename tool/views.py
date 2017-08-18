@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Project, Estimate
 from .forms import ProjectForm, EstimateForm, TaskForm
 
@@ -20,7 +21,15 @@ def milestones(request):
 # List of current projects for ALL users
 @login_required
 def projects(request):
-	projects = Project.objects.all()
+	project_list = Project.objects.all()
+	page = request.GET.get('page', 1)
+	paginator = Paginator(project_list, 2)
+	try:
+		projects = paginator.page(page)
+	except PageNotAnInteger:
+		projects = paginator.page(1)
+	except EmptyPage:
+		projects = paginator.page(paginator.num_pages)
 	return render(request, 'tool/projects.html', {'projects' : projects})
 
 # Creates a new project

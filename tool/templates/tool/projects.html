@@ -14,7 +14,6 @@
 			<!-- Table: Projects -->
 				<section>
 					<h3>Projects</h3>
-					<p>Current projects on the SMART-SPI tool</p>
 					<div class="table-wrapper">
 						<table>
 							<thead>
@@ -43,6 +42,28 @@
 								{% endfor %}
 							</tbody>
 						</table>
+
+						{% if projects.has_other_pages %}
+							<ul class="pagination">
+								{% if projects.has_previous %}
+									<li><a href="?page={{ projects.previous_page_number }}">&laquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&laquo;</span></li>
+								{% endif %}
+								{% for i in projects.paginator.page_range %}
+									{% if projects.number == i %}
+										<li class="active"><span>{{ i }} <span class="sr-only"></span></span></li>
+									{% else %}
+										<li><a href="?page={{ i }}">{{ i }}</a></li>
+									{% endif %}
+								{% endfor %}
+								{% if projects.has_next %}
+									<li><a href="?page={{ projects.next_page_number }}">&raquo;</a></li>
+								{% else %}
+									<li class="disabled"><span>&raquo;</span></li>
+								{% endif %}
+							</ul>
+						{% endif %}
 
 					</div>
 					<div class="12u$">
