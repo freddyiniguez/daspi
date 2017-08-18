@@ -4,20 +4,20 @@ from .models import Project
 from .forms import ProjectForm
 
 
-# - - - H O M E - - -
+# - - - H O M E - - - #
 # Home page
 def home(request):
 	return render(request, 'tool/index.html', {})
 
 
-# - - - M I L E S T O N E S - - - 
+# - - - M I L E S T O N E S - - - #
 # Milestones and business information about SMART-SPI
 def milestones(request):
 	return render(request, 'tool/milestones.html', {})
 
 
-# - - - P R O J E C T S - - - 
-# Projects creation, capture of process information and data analysis and visualization
+# - - - P R O J E C T S - - - #
+# List of current projects for ALL users
 @login_required
 def projects(request):
 	projects = Project.objects.all()
@@ -49,7 +49,7 @@ def project_delete(request, pk):
 	project.delete()
 	return redirect('projects_list')
 
-# - - - T E M P O R A L - - - 
+# - - - T E M P O R A L - - - #
 # A temporal link to see the available HTML theme elements
 def help(request):
 	return render(request, 'tool/help.html', {})

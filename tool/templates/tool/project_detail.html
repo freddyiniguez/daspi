@@ -11,7 +11,56 @@
 				<p align="justify">{{ project.description }}</p>
 			</header>
 
-			<p>Something here</p>
+			<!-- Table: Estimates -->
+				<section>
+					<h3>Current estimates</h3>
+					<div class="table-wrapper">
+						<table>
+							<thead>
+								<tr>
+									<th>Requirement</th>
+									<th>Description</th>
+									<th>Complexity</th>
+									<th>Role</th>
+									<th>Required hours (AVG)</th>
+								</tr>
+							</thead>
+							
+							<tbody>
+								{% for estimate in project.estimates.all %}
+									<tr>
+										<td>{{ estimate.requirement }}</td>
+										<td>{{ estimate.description }}</td>
+										<td>{{ estimate.complexity }}</td>
+										<td>{{ estimate.role }}</td>
+										<td>{{ estimate.required_hours }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+							<tfoot>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>
+										<a href="" class="button special small" title="Add estimate to current project"><i class="fa fa-plus" aria-hidden="true"></i> Add estimate</a>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="12u$">
+						<ul class="actions pull-right">
+							<li><a href="/" class="button special">Visualize data</a></li>
+							<li><a href="/projects" class="button">Back</a></li>
+						</ul>
+					</div>
+				</section>
+
+			<!-- Table: Tasks -->
+
+			<!-- Table: Effort/Cost -->
 		</div>
 	</section>
 {% endblock %}
