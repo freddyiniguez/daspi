@@ -100,11 +100,11 @@
 										<td>{{ task.phase }}</td>
 										<td>{{ task.type }}</td>
 										<td>{{ task.task_complexity }}</td>
-										<td>{{ task.percentage_of_completion }}</td>
+										<td>{{ task.percentage_of_completion }}%</td>
 										<td>{{ task.planned_hours }}</td>
 										<td>{{ task.real_hours }}</td>
-										<td>{{ task.planned_cost }}</td>
-										<td>{{ task.real_cost }}</td>
+										<td>${{ task.planned_cost }}</td>
+										<td>${{ task.real_cost }}</td>
 										<td>{{ task.planned_start_date }}</td>
 										<td>{{ task.planned_end_date }}</td>
 										<td>{{ task.real_start_date }}</td>
@@ -146,8 +146,7 @@
 									<td></td>
 									<td></td>
 									<td>
-										<!-- ADD THE URL ACTION TO NEW TASK -->
-										<a href="" class="button special small" title="Add task to current project"><i class="fa fa-plus" aria-hidden="true"></i> Add task</a>
+										<a href="{% url 'task_new' pk=project.pk %}" class="button special small" title="Add task to current project"><i class="fa fa-plus" aria-hidden="true"></i> Add task</a>
 									</td>
 								</tr>
 							</tfoot>

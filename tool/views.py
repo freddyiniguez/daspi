@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Project, Estimate
-from .forms import ProjectForm, EstimateForm
+from .forms import ProjectForm, EstimateForm, TaskForm
 
 
 # - - - H O M E - - - #
@@ -64,6 +64,22 @@ def estimate_new(request, pk):
 	else:
 		form = EstimateForm()
 	return render(request, 'tool/estimate_new.html', {'form' : form})
+
+
+# - - - T A S K S - - - #
+#Creates a new task
+@login_required
+def task_new(request, pk):
+	if request.method == 'POST':
+		form = TaskForm(request.POST)
+		if form.is_valid():
+			task = form.save(commit = False)
+			task.project = get_object_or_404(Project, pk=pk)
+			task.save()
+			return redirect('project_detail', pk=pk)
+	else:
+		form = TaskForm()
+	return render(request, 'tool/task_new.html', {'form' : form})
 
 
 # - - - T E M P O R A L - - - #
