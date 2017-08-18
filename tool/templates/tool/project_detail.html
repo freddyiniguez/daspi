@@ -60,7 +60,7 @@
 					</div>
 					<div class="12u$">
 						<ul class="actions pull-right">
-							<li><a href="/" class="button special">Visualize data</a></li>
+							<li><a href="{% url 'estimate_visualize' pk=project.pk %}" class="button special">Visualize data</a></li>
 							<li><a href="/projects" class="button">Back</a></li>
 						</ul>
 					</div>
@@ -154,7 +154,7 @@
 					</div>
 					<div class="12u$">
 						<ul class="actions pull-right">
-							<li><a href="/" class="button special">Visualize data</a></li>
+							<li><a href="{% url 'task_visualize' pk=project.pk %}" class="button special">Visualize data</a></li>
 							<li><a href="/projects" class="button">Back</a></li>
 						</ul>
 					</div>

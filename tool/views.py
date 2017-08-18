@@ -74,9 +74,15 @@ def estimate_new(request, pk):
 		form = EstimateForm()
 	return render(request, 'tool/estimate_new.html', {'form' : form})
 
+# Visualyze estimates information
+@login_required
+def estimate_visualize(request, pk):
+	project = get_object_or_404(Project, pk=pk)
+	return render(request, 'tool/estimate_visualize.html', {'project' : project})
+
 
 # - - - T A S K S - - - #
-#Creates a new task
+# Creates a new task
 @login_required
 def task_new(request, pk):
 	if request.method == 'POST':
@@ -89,6 +95,12 @@ def task_new(request, pk):
 	else:
 		form = TaskForm()
 	return render(request, 'tool/task_new.html', {'form' : form})
+
+# Visualyze task information
+@login_required
+def task_visualize(request, pk):
+	project = get_object_or_404(Project, pk=pk)
+	return render(request, 'tool/task_visualize.html', {'project' : project})
 
 
 # - - - T E M P O R A L - - - #
