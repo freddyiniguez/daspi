@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Project
-from .forms import ProjectForm
+from .models import Project, Estimate
+from .forms import ProjectForm, EstimateForm
 
 
 # - - - H O M E - - - #
@@ -48,6 +48,23 @@ def project_delete(request, pk):
 	project = get_object_or_404(Project, pk=pk)
 	project.delete()
 	return redirect('projects_list')
+
+
+# - - - E S T I M A T E S - - - #
+# Creates a new estimate
+@login_required
+def estimate_new(request, pk):
+	if request.method == 'POST':
+		form = EstimateForm(request.POST)
+		if form.is_valid():
+			estimate = form.save(commit = False)
+			estimate.project = get_object_or_404(Project, pk=pk)
+			estimate.save()
+			return redirect('project_detail', pk=pk)
+	else:
+		form = EstimateForm()
+	return render(request, 'tool/estimate_new.html', {'form' : form})
+
 
 # - - - T E M P O R A L - - - #
 # A temporal link to see the available HTML theme elements
