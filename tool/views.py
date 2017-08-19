@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Project, Estimate
-from .forms import ProjectForm, EstimateForm, TaskForm
+from .forms import ProjectForm, EstimateForm, TaskForm, EffortForm
 
 
 # - - - H O M E - - - #
@@ -101,6 +101,28 @@ def task_new(request, pk):
 def task_visualize(request, pk):
 	project = get_object_or_404(Project, pk=pk)
 	return render(request, 'tool/task_visualize.html', {'project' : project})
+
+
+# - - - E F F O R T S - - - #
+# Creates a new effort
+@login_required
+def effort_new(request, pk):
+	if request.method == 'POST':
+		form = EffortForm(request.POST)
+		if form.is_valid():
+			effort = form.save(commit = False)
+			effort.project = get_object_or_404(Project, pk=pk)
+			effort.save()
+			return redirect('project_detail', pk=pk)
+	else:
+		form = EffortForm()
+	return render(request, 'tool/effort_new.html', {'form' : form})
+
+# Visualyze effort information
+@login_required
+def effort_visualize(request, pk):
+	project = get_object_or_404(Project, pk=pk)
+	return render(request, 'tool/effort_visualize.html', {'project' : project})
 
 
 # - - - T E M P O R A L - - - #

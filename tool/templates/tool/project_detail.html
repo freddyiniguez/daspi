@@ -160,7 +160,81 @@
 					</div>
 				</section>
 
-			<!-- Table: Effort/Cost -->
+				<br>
+				<br>
+
+			<!-- Table: Effort -->
+				<section>
+					<h3>Effort</h3>
+					<p>Current effort for each phase during development</p>
+					<div class="table-wrapper">
+						<table>
+							<thead>
+								<tr>
+									<th>Phase</th>
+									<th>Budgeted effort</th>
+									<th>Planned effort</th>
+									<th>Real effort</th>
+									<th>Deviation of budgeted vs planned effort</th>
+									<th>Deviation of planned vs real effort</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for effort in project.efforts.all %}
+									<tr>
+										<td>{{ effort.phase }}</td>
+										<td>{{ effort.budgeted_effort }}</td>
+										<td>{{ effort.planned_effort }}</td>
+										<td>{{ effort.real_effort }}</td>
+										{% if effort.deviation_budgeted_planned <= 0 %}
+											<td><span class="verde">{{ effort.deviation_budgeted_planned }}%</span></td>
+										{% elif effort.deviation_budgeted_planned < 10 %}
+											<td><span class="amarillo">{{ effort.deviation_budgeted_planned }}%</span></td>
+										{% else %}
+											<td><span class="rojo">{{ effort.deviation_budgeted_planned }}%</span></td>
+										{% endif %}
+										{% if effort.deviation_planned_real <= 0 %}
+											<td><span class="verde">{{ effort.deviation_planned_real }}%</span></td>
+										{% elif effort.deviation_planned_real < 10 %}
+											<td><span class="amarillo">{{ effort.deviation_planned_real }}%</span></td>
+										{% else %}
+											<td><span class="rojo">{{ effort.deviation_planned_real }}%</span></td>
+										{% endif %}
+									</tr>
+								{% empty %}
+									<tr>
+										<td>There is no effort yet</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								{% endfor %}
+							</tbody>
+							<tfoot>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>
+										<a href="{% url 'effort_new' pk=project.pk %}" class="button special small" title="Add effort to current project"><i class="fa fa-plus" aria-hidden="true"></i> Add effort</a>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="12u$">
+						<ul class="actions pull-right">
+							<li><a href="{% url 'effort_visualize' pk=project.pk %}" class="button special">Visualize data</a></li>
+							<li><a href="/projects" class="button">Back</a></li>
+						</ul>
+					</div>
+				</section>
+
+			<!-- Table: Cost -->
 		</div>
 	</section>
 {% endblock %}

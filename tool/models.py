@@ -53,17 +53,17 @@ class Estimate(models.Model):
 # From the Monitoring and Control process, a task contains information about planned vs real hours, percentage of completion and resources to developed.
 class Task(models.Model):
 	project = models.ForeignKey('tool.Project', related_name = 'tasks')
-	# An enum is created to select a specific date within the project
+	# An enum is created to select a specific phase within the task
 	PHASE_CHOICES = (
-		('QA', 'Quality assurance'),
-		('CHANGES', 'Changes'),
-		('CLOSURE', 'Project closure'),
-		('DEVT', 'Development'),
-		('IMPLEMENTATION', 'Implementation'),
+		('START', 'Starting'),
+		('REQM', 'Requirements'),
 		('PLAN', 'Planning'),
+		('DEVT', 'Development'),
 		('TEST', 'Testing'),
-		('REQM', 'Requirements management'),
+		('IMPLEMENTATION', 'Implementation'),
 		('CONTROL', 'Monitoring and control'),
+		('CONFIG', 'Configuration management'),
+		('CLOSURE', 'Closure'),
 	)
 	phase = models.CharField(
 		max_length = 100,
@@ -122,3 +122,42 @@ class Task(models.Model):
 	def __str__(self):
 		return self.task
 
+
+# - - - E F F O R T - - - #
+# From the Monitoring and Control process, an effort constains information for planned and real effort budgeted
+class Effort(models.Model):
+	project = models.ForeignKey('tool.Project', related_name = 'efforts')
+	# An enum is created to select a specific date within the project
+	PHASE_CHOICES = (
+		('START', 'Starting'),
+		('REQM', 'Requirements'),
+		('PLAN', 'Planning'),
+		('DEVT', 'Development'),
+		('TEST', 'Testing'),
+		('IMPLEMENTATION', 'Implementation'),
+		('CONTROL', 'Monitoring and control'),
+		('CONFIG', 'Configuration management'),
+		('CLOSURE', 'Closure'),
+	)
+	phase = models.CharField(
+		max_length = 100,
+		choices = PHASE_CHOICES,
+	)
+	budgeted_effort = models.FloatField()
+	planned_effort = models.FloatField()
+	real_effort = models.FloatField()
+
+	def deviation_budgeted_planned(self):
+		deviation = self.planned_effort - self.budgeted_effort
+		deviation = (deviation / self.budgeted_effort) * 100
+		deviation = round(deviation, 2)
+		return deviation
+
+	def deviation_planned_real(self):
+		deviation = self.real_effort - self.planned_effort
+		deviation = (deviation / self.planned_effort) * 100
+		deviation = round(deviation, 2)
+		return deviation
+
+	def __str__(self):
+		return self.phase

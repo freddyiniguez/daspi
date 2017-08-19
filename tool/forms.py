@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project, Estimate, Task
+from .models import Project, Estimate, Task, Effort
 
 # - - - P R O J E C T - - - #
 # Automatically-generated form to create a Project
@@ -50,4 +50,18 @@ class TaskForm(forms.ModelForm):
 			'real_start_date',
 			'real_end_date',
 			'resource',
+		)
+
+
+# - - - E F F O R T - - - #
+# Automatically-generated form to create an effort
+class EffortForm(forms.ModelForm):
+
+	class Meta:
+		model = Effort
+		fields = (
+			'phase',
+			'budgeted_effort',
+			'planned_effort',
+			'real_effort',
 		)
