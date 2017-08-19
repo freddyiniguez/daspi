@@ -11,6 +11,7 @@
 				<p align="justify">{{ project.description }}</p>
 			</header>
 
+			
 			<!-- Table: Estimates -->
 				<section>
 					<h3>Estimates</h3>
@@ -69,6 +70,7 @@
 				<br>
 				<br>
 
+			
 			<!-- Table: Tasks -->
 				<section>
 					<h3>Tasks</h3>
@@ -163,10 +165,11 @@
 				<br>
 				<br>
 
+
 			<!-- Table: Effort -->
 				<section>
 					<h3>Effort</h3>
-					<p>Current effort for each phase during development</p>
+					<p>Current effort for each phase of the project</p>
 					<div class="table-wrapper">
 						<table>
 							<thead>
@@ -234,7 +237,81 @@
 					</div>
 				</section>
 
+				<br>
+				<br>
+
+				
 			<!-- Table: Cost -->
+				<section>
+					<h3>Cost</h3>
+					<p>Current cost for each phase of the project</p>
+					<div class="table-wrapper">
+						<table>
+							<thead>
+								<tr>
+									<th>Phase</th>
+									<th>Budgeted cost</th>
+									<th>Planned cost</th>
+									<th>Real cost</th>
+									<th>Deviation of budgeted vs real cost</th>
+									<th>Deviation of planned vs real cost</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for cost in project.costs.all %}
+									<tr>
+										<td>{{ cost.phase }}</td>
+										<td>{{ cost.budgeted_cost }}</td>
+										<td>{{ cost.planned_cost }}</td>
+										<td>{{ cost.real_cost }}</td>
+										{% if cost.deviation_budgeted_real <= 0 %}
+											<td><span class="verde">{{ cost.deviation_budgeted_real }}%</span></td>
+										{% elif cost.deviation_budgeted_real < 10 %}
+											<td><span class="amarillo">{{ cost.deviation_budgeted_real }}%</span></td>
+										{% else %}
+											<td><span class="rojo">{{ cost.deviation_budgeted_real }}%</span></td>
+										{% endif %}
+
+										{% if cost.deviation_planned_real <= 0 %}
+											<td><span class="verde">{{ cost.deviation_planned_real }}%</span></td>
+										{% elif cost.deviation_planned_real < 10 %}
+											<td><span class="amarillo">{{ cost.deviation_planned_real }}%</span></td>
+										{% else %}
+											<td><span class="rojo">{{ cost.deviation_planned_real }}%</span></td>
+										{% endif %}
+									</tr>
+								{% empty %}
+									<tr>
+										<td>There is no cost yet</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								{% endfor %}
+							</tbody>
+							<tfoot>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>
+										<a href="{% url 'cost_new' pk=project.pk %}" class="button special small" title="Add cost to current project"><i class="fa fa-plus" aria-hidden="true"></i> Add cost</a>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="12u$">
+						<ul class="actions pull-right">
+							<li><a href="{% url 'cost_visualize' pk=project.pk %}" class="button special">Visualize data</a></li>
+							<li><a href="/projects" class="button">Back</a></li>
+						</ul>
+					</div>
+				</section>
 		</div>
 	</section>
 {% endblock %}

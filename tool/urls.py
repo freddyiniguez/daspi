@@ -14,5 +14,7 @@ urlpatterns = [
 	url(r'^tasks/(?P<pk>\d+)/visualize/$', views.task_visualize, name = 'task_visualize'),
 	url(r'^efforts/(?P<pk>\d+)/new$', views.effort_new, name = 'effort_new'),
 	url(r'^efforts/(?P<pk>\d+)/visualize/$', views.effort_visualize, name = 'effort_visualize'),
+	url(r'^costs/(?P<pk>\d+)/new$', views.cost_new, name = 'cost_new'),
+	url(r'^costs/(?P<pk>\d+)/visualize/$', views.cost_visualize, name = 'cost_visualize'),
 	url(r'^help/', views.help),
 ]

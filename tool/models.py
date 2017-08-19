@@ -124,10 +124,10 @@ class Task(models.Model):
 
 
 # - - - E F F O R T - - - #
-# From the Monitoring and Control process, an effort constains information for planned and real effort budgeted
+# From the Monitoring and Control process, an effort constains information for planned and real effort 
 class Effort(models.Model):
 	project = models.ForeignKey('tool.Project', related_name = 'efforts')
-	# An enum is created to select a specific date within the project
+	# An enum is created to select a specific phase within the effort
 	PHASE_CHOICES = (
 		('START', 'Starting'),
 		('REQM', 'Requirements'),
@@ -156,6 +156,46 @@ class Effort(models.Model):
 	def deviation_planned_real(self):
 		deviation = self.real_effort - self.planned_effort
 		deviation = (deviation / self.planned_effort) * 100
+		deviation = round(deviation, 2)
+		return deviation
+
+	def __str__(self):
+		return self.phase
+
+
+# - - - C O S T - - - #
+# From the Monitoring and Control process, a cost constains information for planned and real cost
+class Cost(models.Model):
+	project = models.ForeignKey('tool.Project', related_name = 'costs')
+	# An enum is created to select a specific phase within the cost
+	PHASE_CHOICES = (
+		('START', 'Starting'),
+		('REQM', 'Requirements'),
+		('PLAN', 'Planning'),
+		('DEVT', 'Development'),
+		('TEST', 'Testing'),
+		('IMPLEMENTATION', 'Implementation'),
+		('CONTROL', 'Monitoring and control'),
+		('CONFIG', 'Configuration management'),
+		('CLOSURE', 'Closure'),
+	)
+	phase = models.CharField(
+		max_length = 100,
+		choices = PHASE_CHOICES,
+	)
+	budgeted_cost = models.FloatField()
+	planned_cost = models.FloatField()
+	real_cost = models.FloatField()
+
+	def deviation_budgeted_real(self):
+		deviation = self.real_cost - self.budgeted_cost
+		deviation = (deviation / self.budgeted_cost) * 100
+		deviation = round(deviation, 2)
+		return deviation
+
+	def deviation_planned_real(self):
+		deviation = self.real_cost - self.planned_cost
+		deviation = (deviation / self.planned_cost) * 100
 		deviation = round(deviation, 2)
 		return deviation
 

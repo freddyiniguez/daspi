@@ -1,0 +1,29 @@
+{% extends 'tool/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<!-- Main -->
+	<section id="main" class="wrapper">
+		<div class="container">
+
+			<header class="major special">
+				<h2>New cost</h2>
+				<p align="justify">Provide some details to create a new cost for the current project</p>
+			</header>
+
+			<!-- Form -->
+				<section>
+					<h3>Cost details</h3>
+					<form method="POST" class="cost-form">{% csrf_token %}
+
+						{{ form.as_p }}
+						<ul class="actions pull-right">
+							<button type="submit" class="button special">Save</button>
+							<li><a href="{% url 'projects_list'%}" class="button">Back</a></li>
+						</ul>
+
+					</form>
+				</section>
+		</div>
+	</section>
+{% endblock %}

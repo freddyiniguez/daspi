@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Project, Estimate
-from .forms import ProjectForm, EstimateForm, TaskForm, EffortForm
+from .models import Project, Estimate, Task, Effort, Cost
+from .forms import ProjectForm, EstimateForm, TaskForm, EffortForm, CostForm
 
 
 # - - - H O M E - - - #
@@ -123,6 +123,28 @@ def effort_new(request, pk):
 def effort_visualize(request, pk):
 	project = get_object_or_404(Project, pk=pk)
 	return render(request, 'tool/effort_visualize.html', {'project' : project})
+
+
+# - - - C O S T S - - - #
+# Creates a new cost
+@login_required
+def cost_new(request, pk):
+	if request.method == 'POST':
+		form = CostForm(request.POST)
+		if form.is_valid():
+			cost = form.save(commit = False)
+			cost.project = get_object_or_404(Project, pk=pk)
+			cost.save()
+			return redirect('project_detail', pk=pk)
+	else:
+		form = CostForm()
+	return render(request, 'tool/cost_new.html', {'form' : form})
+
+# Visualyze cost information
+@login_required
+def cost_visualize(request, pk):
+	project = get_object_or_404(Project, pk=pk)
+	return render(request, 'tool/cost_visualize.html', {'project' : project})
 
 
 # - - - T E M P O R A L - - - #
