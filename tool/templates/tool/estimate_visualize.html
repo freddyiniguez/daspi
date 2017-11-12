@@ -8,13 +8,28 @@
 
 			<header class="major special">
 				<h2>Estimates</h2>
-				<p align="justify">Visualize insights after data analysis of estimates for {{ project.title }} project</p>
+				<p align="justify">Visualize insights after data analysis of estimates for {{project.title}} project</p>
 			</header>
 
 			<!-- Visual data -->
 				<section>
-					<h3>Graphics</h3>
-					<p>[Insert data graphic]</p>
+					<div class="row 150%">
+						<div class="6u 12u$(xsmall)">
+							<div class="image fit captioned">
+								<img src="{% static 'images/visualizations/estimates.png' %}"/>
+								<h3>Visualization of requirements estimates</h3>
+							</div>
+						</div>
+						<div class="6u$ 12u$(xsmall)">
+							<div class="image fit captioned">
+								<p>Mean: {{descriptive.mean}}</p>
+								<p>Standard Deviation: {{descriptive.std}}</p>
+								<p>Min: {{descriptive.min}}</p>
+								<p>Max: {{descriptive.max}}</p>
+								<h3>Descriptive analytics</h3>
+							</div>
+						</div>
+					</div>
 				</section>
 		</div>
 	</section>

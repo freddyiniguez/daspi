@@ -4,6 +4,19 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Project, Estimate, Task, Effort, Cost
 from .forms import ProjectForm, EstimateForm, TaskForm, EffortForm, CostForm
 
+# Imports for data analysis
+import numpy as np 
+import pandas as pd 
+from numpy.random import randn 
+
+# Imports for stats
+from scipy import stats
+
+# Imports for plotting
+import matplotlib as mpl 
+import matplotlib.pyplot as plt 
+import seaborn as sns 
+
 
 # - - - H O M E - - - #
 # Home page
@@ -78,7 +91,27 @@ def estimate_new(request, pk):
 @login_required
 def estimate_visualize(request, pk):
 	project = get_object_or_404(Project, pk=pk)
-	return render(request, 'tool/estimate_visualize.html', {'project' : project})
+
+	# Selected targed (attribute) to visualize: "required_hours"
+	requirements = tuple(Estimate.objects.only())
+	positions = np.arange(len(requirements))
+	required_hours = tuple(Estimate.objects.values('required_hours'))
+	database = []
+
+	for x in required_hours:
+		database.append(x['required_hours'])
+
+	plt.bar(positions, database, align = 'center', alpha = 0.5)
+	plt.xticks(positions, requirements, rotation = 'vertical')
+	plt.ylabel('Required hours (AVG)')
+	plt.title('Required hours per requirement')	
+	plt.savefig('tool/static/images/visualizations/estimates.png')
+
+	# Descriptive analytics
+	descriptive = pd.DataFrame(database, columns = ['Required Hours'])
+	descriptive_analytics = descriptive.describe()
+
+	return render(request, 'tool/estimate_visualize.html', {'project' : project, 'descriptive' : descriptive_analytics})
 
 
 # - - - T A S K S - - - #
@@ -100,6 +133,7 @@ def task_new(request, pk):
 @login_required
 def task_visualize(request, pk):
 	project = get_object_or_404(Project, pk=pk)
+	# Selected targed (attribute) to visualize: "task_complexity"
 	return render(request, 'tool/task_visualize.html', {'project' : project})
 
 
@@ -122,6 +156,7 @@ def effort_new(request, pk):
 @login_required
 def effort_visualize(request, pk):
 	project = get_object_or_404(Project, pk=pk)
+	# Selected targed (attribute) to visualize: "planned_effort VS real_effort"
 	return render(request, 'tool/effort_visualize.html', {'project' : project})
 
 
@@ -144,6 +179,7 @@ def cost_new(request, pk):
 @login_required
 def cost_visualize(request, pk):
 	project = get_object_or_404(Project, pk=pk)
+	# Selected targed (attribute) to visualize: "planned_cost VS real_cost"
 	return render(request, 'tool/cost_visualize.html', {'project' : project})
 
 
