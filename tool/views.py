@@ -101,11 +101,12 @@ def estimate_visualize(request, pk):
 	for x in required_hours:
 		database.append(x['required_hours'])
 
-	plt.bar(positions, database, align = 'center', alpha = 0.5)
+	plt.bar(positions, database, align = 'center', alpha = 0.5, color = '#345d9e')
 	plt.xticks(positions, requirements, rotation = 'vertical')
 	plt.ylabel('Required hours (AVG)')
 	plt.title('Required hours per requirement')	
 	plt.savefig('tool/static/images/visualizations/estimates.png')
+	plt.close()
 
 	# Descriptive analytics
 	descriptive = pd.DataFrame(database, columns = ['Required Hours'])
@@ -157,7 +158,55 @@ def effort_new(request, pk):
 def effort_visualize(request, pk):
 	project = get_object_or_404(Project, pk=pk)
 	# Selected targed (attribute) to visualize: "planned_effort VS real_effort"
-	return render(request, 'tool/effort_visualize.html', {'project' : project})
+	phases = tuple(Effort.objects.only())
+	positions = np.arange(len(phases))
+
+	planned = tuple(Effort.objects.values('planned_effort'))
+	planned_effort = []
+
+	for x in planned:
+		planned_effort.append(x['planned_effort'])
+
+	real = tuple(Effort.objects.values('real_effort'))
+	real_effort = []
+
+	for y in real:
+		real_effort.append(y['real_effort'])
+
+	fig, ax = plt.subplots()
+	index = positions
+	bar_width = 0.35
+	opacity = 0.8
+
+	rects1 = plt.bar(index, planned_effort, bar_width,
+		alpha=opacity,
+		color='#345d9e',
+		label='Planned effort'
+	)
+
+	rects2 = plt.bar(index + bar_width, real_effort, bar_width,
+		alpha=opacity,
+		color='#9e3449',
+		label='Real effort'
+	)
+
+	plt.xlabel('Phases')
+	plt.ylabel('Effort (in Hours)')
+	plt.title('Planned vs Real effort per Phase')
+	plt.xticks(index + bar_width, phases)
+	plt.legend()
+
+	plt.tight_layout()
+	plt.savefig('tool/static/images/visualizations/efforts.png')
+	plt.close()
+
+	# Descriptive analytics
+	descriptive_planned = pd.DataFrame(planned_effort, columns = ['Planned Effort'])
+	descriptive_analytics_planned = descriptive_planned.describe()
+	descriptive_real = pd.DataFrame(real_effort, columns = ['Real Effort'])
+	descriptive_analytics_real = descriptive_real.describe()
+
+	return render(request, 'tool/effort_visualize.html', {'project' : project, 'descriptive_planned': descriptive_analytics_planned, 'descriptive_real': descriptive_analytics_real})
 
 
 # - - - C O S T S - - - #
@@ -180,7 +229,55 @@ def cost_new(request, pk):
 def cost_visualize(request, pk):
 	project = get_object_or_404(Project, pk=pk)
 	# Selected targed (attribute) to visualize: "planned_cost VS real_cost"
-	return render(request, 'tool/cost_visualize.html', {'project' : project})
+	phases = tuple(Cost.objects.only())
+	positions = np.arange(len(phases))
+
+	planned = tuple(Cost.objects.values('planned_cost'))
+	planned_cost = []
+
+	for x in planned:
+		planned_cost.append(x['planned_cost'])
+
+	real = tuple(Cost.objects.values('real_cost'))
+	real_cost = []
+
+	for y in real:
+		real_cost.append(y['real_cost'])
+
+	fig, ax = plt.subplots()
+	index = positions
+	bar_width = 0.35
+	opacity = 0.8
+
+	rects1 = plt.bar(index, planned_cost, bar_width,
+		alpha=opacity,
+		color='#345d9e',
+		label='Planned cost'
+	)
+
+	rects2 = plt.bar(index + bar_width, real_cost, bar_width,
+		alpha=opacity,
+		color='#9e3449',
+		label='Real cost'
+	)
+
+	plt.xlabel('Phases')
+	plt.ylabel('Cost (in Mexican Pesos)')
+	plt.title('Planned vs Real cost per Phase')
+	plt.xticks(index + bar_width, phases)
+	plt.legend()
+
+	plt.tight_layout()
+	plt.savefig('tool/static/images/visualizations/costs.png')
+	plt.close()
+
+	# Descriptive analytics
+	descriptive_planned = pd.DataFrame(planned_cost, columns = ['Planned Cost'])
+	descriptive_analytics_planned = descriptive_planned.describe()
+	descriptive_real = pd.DataFrame(real_cost, columns = ['Real Cost'])
+	descriptive_analytics_real = descriptive_real.describe()
+
+	return render(request, 'tool/cost_visualize.html', {'project' : project,  'descriptive_planned': descriptive_analytics_planned, 'descriptive_real': descriptive_analytics_real})
 
 
 # - - - T E M P O R A L - - - #
