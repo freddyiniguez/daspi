@@ -149,14 +149,20 @@ class Effort(models.Model):
 
 	def deviation_budgeted_planned(self):
 		deviation = self.planned_effort - self.budgeted_effort
-		deviation = (deviation / self.budgeted_effort) * 100
-		deviation = round(deviation, 2)
+		if (self.budgeted_effort > 0):
+			deviation = (deviation / self.budgeted_effort) * 100
+			deviation = round(deviation, 2)
+		else:
+			deviation = 0
 		return deviation
 
 	def deviation_planned_real(self):
 		deviation = self.real_effort - self.planned_effort
-		deviation = (deviation / self.planned_effort) * 100
-		deviation = round(deviation, 2)
+		if (self.planned_effort > 0):
+			deviation = (deviation / self.planned_effort) * 100
+			deviation = round(deviation, 2)
+		else:
+			deviation = 0
 		return deviation
 
 	def __str__(self):
@@ -189,14 +195,20 @@ class Cost(models.Model):
 
 	def deviation_budgeted_real(self):
 		deviation = self.real_cost - self.budgeted_cost
-		deviation = (deviation / self.budgeted_cost) * 100
-		deviation = round(deviation, 2)
+		if (self.budgeted_cost > 0):
+			deviation = (deviation / self.budgeted_cost) * 100
+			deviation = round(deviation, 2)
+		else:
+			deviation = 0
 		return deviation
 
 	def deviation_planned_real(self):
 		deviation = self.real_cost - self.planned_cost
-		deviation = (deviation / self.planned_cost) * 100
-		deviation = round(deviation, 2)
+		if (self.planned_cost > 0):
+			deviation = (deviation / self.planned_cost) * 100
+			deviation = round(deviation, 2)
+		else:
+			deviation = 0
 		return deviation
 
 	def __str__(self):
