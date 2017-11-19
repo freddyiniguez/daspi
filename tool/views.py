@@ -135,6 +135,31 @@ def task_new(request, pk):
 def task_visualize(request, pk):
 	project = get_object_or_404(Project, pk=pk)
 	# Selected targed (attribute) to visualize: "task_complexity"
+	task_complexity = tuple(Task.objects.values('task_complexity'))
+	labels = 'LOW', 'MEDIUM', 'HIGH'
+	sizes = []
+	low = 0
+	medium = 0
+	high = 0
+	
+	for x in task_complexity:
+		if (x['task_complexity']=='LOW'):
+			low = low + 1
+		elif (x['task_complexity']=='MEDIUM'):
+			medium = medium + 1
+		elif (x['task_complexity']=='HIGH'):
+			high = high + 1
+	
+	sizes.append(low)
+	sizes.append(medium)
+	sizes.append(high)
+	
+	plt.pie(sizes, labels = labels)
+	plt.axis('equal')
+	plt.title('Task complexity classification')
+	plt.savefig('tool/static/images/visualizations/tasks.png')
+	plt.close()
+	
 	return render(request, 'tool/task_visualize.html', {'project' : project})
 
 
