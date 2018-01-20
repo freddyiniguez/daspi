@@ -169,25 +169,18 @@ def task_visualize(request, pk):
 	sizes.append(high)
 
 	# Linear Regression data
-	time = [
-		[1.0],
-		[1.0],
-		[2.0],
-		[4.0],
-		[11.0],
-		[7.0],
-		[3.0],
-	]
+	real_hours = tuple(Task.objects.values('real_hours'))
+	time_list = []
+	for x in real_hours:
+		time_list.append(x['real_hours'])
+	time1 = np.array(time_list)
+	time = np.reshape(time1, (-1,1))
 
-	cost = [
-		 70.00, 
-		 70.00, 
-		 140.00, 
-		 280.00, 
-		 770.00, 
-		 490.00, 
-		 210.00, 
-	]
+	real_cost = tuple(Task.objects.values('real_cost'))
+	cost_list = []
+	for y in real_cost:
+		cost_list.append(y['real_cost'])
+	cost = np.array(cost_list)
 	
 	# Descriptive Analytics graphic
 	plt.pie(sizes, labels = labels)
