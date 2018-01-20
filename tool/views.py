@@ -1,8 +1,11 @@
+import os
+import glob
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Project, Estimate, Task, Effort, Cost
 from .forms import ProjectForm, EstimateForm, TaskForm, EffortForm, CostForm
+from django.contrib import messages
 
 # Imports for data analysis
 import numpy as np 
@@ -16,6 +19,9 @@ from scipy import stats
 import matplotlib as mpl 
 import matplotlib.pyplot as plt 
 import seaborn as sns 
+
+# Imports for Linear Regression
+from sklearn import linear_model
 
 
 # - - - H O M E - - - #
@@ -54,6 +60,7 @@ def project_new(request):
 			project = form.save(commit = False)
 			project.author = request.user
 			project.save()
+			messages.success(request, 'Project was successfully created.')
 			return redirect('projects_list')
 	else:
 		form = ProjectForm()
@@ -63,6 +70,10 @@ def project_new(request):
 @login_required
 def project_detail(request, pk):
 	project = get_object_or_404(Project, pk=pk)
+	# Deletes files from previous visualizations
+	files = glob.glob('tool/static/images/visualizations/*')
+	for f in files:
+		os.remove(f)
 	return render(request, 'tool/project_detail.html', {'project' : project})
 
 # Deletes project
@@ -82,6 +93,7 @@ def estimate_new(request, pk):
 			estimate = form.save(commit = False)
 			estimate.project = get_object_or_404(Project, pk=pk)
 			estimate.save()
+			messages.success(request, 'Estimate was successfully saved.')
 			return redirect('project_detail', pk=pk)
 	else:
 		form = EstimateForm()
@@ -125,6 +137,7 @@ def task_new(request, pk):
 			task = form.save(commit = False)
 			task.project = get_object_or_404(Project, pk=pk)
 			task.save()
+			messages.success(request, 'Task was successfully saved.')
 			return redirect('project_detail', pk=pk)
 	else:
 		form = TaskForm()
@@ -134,6 +147,7 @@ def task_new(request, pk):
 @login_required
 def task_visualize(request, pk):
 	project = get_object_or_404(Project, pk=pk)
+	# Descriptive Analytics data
 	# Selected targed (attribute) to visualize: "task_complexity"
 	task_complexity = tuple(Task.objects.values('task_complexity'))
 	labels = 'LOW', 'MEDIUM', 'HIGH'
@@ -153,11 +167,49 @@ def task_visualize(request, pk):
 	sizes.append(low)
 	sizes.append(medium)
 	sizes.append(high)
+
+	# Linear Regression data
+	time = [
+		[1.0],
+		[1.0],
+		[2.0],
+		[4.0],
+		[11.0],
+		[7.0],
+		[3.0],
+	]
+
+	cost = [
+		 70.00, 
+		 70.00, 
+		 140.00, 
+		 280.00, 
+		 770.00, 
+		 490.00, 
+		 210.00, 
+	]
 	
+	# Descriptive Analytics graphic
 	plt.pie(sizes, labels = labels)
 	plt.axis('equal')
 	plt.title('Task complexity classification')
 	plt.savefig('tool/static/images/visualizations/tasks.png')
+
+	plt.clf()
+
+	# Linear Regression graphic
+	reg = linear_model.LinearRegression()
+	reg.fit(time, cost) # This line makes the Linear Regression model learn from the data
+	m = reg.coef_[0]
+	b = reg.intercept_
+	plt.scatter(time, cost, color = "black")
+	predicted_values = [reg.coef_ * i + reg.intercept_ for i in time]
+	plt.plot(time, predicted_values, 'b')
+	plt.xlabel("Requirement time (in hours)")
+	plt.ylabel("Requirement cost")
+	plt.title('Task real time vs cost')
+	plt.savefig('tool/static/images/visualizations/tasks_prediction.png')
+
 	plt.close()
 	
 	return render(request, 'tool/task_visualize.html', {'project' : project})
@@ -173,6 +225,7 @@ def effort_new(request, pk):
 			effort = form.save(commit = False)
 			effort.project = get_object_or_404(Project, pk=pk)
 			effort.save()
+			messages.success(request, 'Effort was successfully saved.')
 			return redirect('project_detail', pk=pk)
 	else:
 		form = EffortForm()
@@ -218,7 +271,7 @@ def effort_visualize(request, pk):
 	plt.xlabel('Phases')
 	plt.ylabel('Effort (in Hours)')
 	plt.title('Planned vs Real effort per Phase')
-	plt.xticks(index + bar_width, phases)
+	plt.xticks(index + bar_width, phases, rotation = 'vertical')
 	plt.legend()
 
 	plt.tight_layout()
@@ -244,6 +297,7 @@ def cost_new(request, pk):
 			cost = form.save(commit = False)
 			cost.project = get_object_or_404(Project, pk=pk)
 			cost.save()
+			messages.success(request, 'Cost was successfully saved.')
 			return redirect('project_detail', pk=pk)
 	else:
 		form = CostForm()
@@ -289,7 +343,7 @@ def cost_visualize(request, pk):
 	plt.xlabel('Phases')
 	plt.ylabel('Cost (in Mexican Pesos)')
 	plt.title('Planned vs Real cost per Phase')
-	plt.xticks(index + bar_width, phases)
+	plt.xticks(index + bar_width, phases, rotation = 'vertical')
 	plt.legend()
 
 	plt.tight_layout()

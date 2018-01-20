@@ -1,0 +1,8 @@
+ {% for message in messages %}
+  <div class="alert {{ message.tags }} alert-dismissible pull-right" role="alert" style="margin:20px;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="background-color: #f32853;">
+      <i class="fa fa-bell" aria-hidden="true"></i>
+    </button>
+    {{ message }}
+  </div>
+{% endfor %}
