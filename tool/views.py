@@ -1,5 +1,6 @@
 import os
 import glob
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -207,6 +208,14 @@ def task_visualize(request, pk):
 	
 	return render(request, 'tool/task_visualize.html', {'project' : project})
 
+# Predicts cost from an estimated time for a task
+@login_required
+def task_predict(request):
+	if request.method == 'POST' and request.is_ajax():
+		time = request.POST.get('time')
+		return HttpResponse(json.dumps({'time': time}), content_type="application/json")
+	else:
+		return render_to_response('tool/help.html', locals())
 
 # - - - E F F O R T S - - - #
 # Creates a new effort

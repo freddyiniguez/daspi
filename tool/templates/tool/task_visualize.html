@@ -27,7 +27,38 @@
 							</div>
 						</div>
 					</div>
+					<br>
+					<br>
+					<br>
+					<form>
+						<div class="row 150%">
+							<div class="6u 12u$(xsmall)">
+								<div class="image fit captioned">
+									<div class="row uniform 50%">
+										<div class="6u 12u$(xsmall)">
+											<label>Task name</label>
+											<input type="text" name="name" id="name" value="" placeholder="Name" />
+										</div>
+										<div class="6u 12u$(xsmall)">
+											<label>Task estimated time</label>
+											<input type="text" name="hours" id="hours" value="" placeholder="Required hours" />
+										</div>
+										<div class="12u$">
+											{{ csrf_token }}
+											<a class="button special icon fa-money" onclick="task_predict()">Predict cost</a>
+											}
+										</div>
+									</div>
+									<h3>Make a Prediction for a new Task</h3>
+								</div>
+							</div>
+						</div>
+					</form>
 				</section>
 		</div>
 	</section>
+
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/notify.min.js' %}"></script>
+	<script src="{% static 'js/tool/task.js' %}"></script>
 {% endblock %}

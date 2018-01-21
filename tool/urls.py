@@ -12,6 +12,7 @@ urlpatterns = [
 	url(r'^estimates/(?P<pk>\d+)/visualize/$', views.estimate_visualize, name = 'estimate_visualize'),
 	url(r'^tasks/(?P<pk>\d+)/new$', views.task_new, name = 'task_new'),
 	url(r'^tasks/(?P<pk>\d+)/visualize/$', views.task_visualize, name = 'task_visualize'),
+	url(r'^tasks/predict/$', views.task_predict, name = "task_predict"),
 	url(r'^efforts/(?P<pk>\d+)/new$', views.effort_new, name = 'effort_new'),
 	url(r'^efforts/(?P<pk>\d+)/visualize/$', views.effort_visualize, name = 'effort_visualize'),
 	url(r'^costs/(?P<pk>\d+)/new$', views.cost_new, name = 'cost_new'),
