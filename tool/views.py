@@ -1,6 +1,7 @@
 import os
 import glob
 import json
+import decimal
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -213,7 +214,33 @@ def task_visualize(request, pk):
 @login_required
 def task_predict(request):
 	if request.is_ajax() and request.POST:
-		data = {'message': "%s" % request.POST.get('time')}
+		# Gets data for the Linear Regression model
+		real_hours = tuple(Task.objects.values('real_hours'))
+		time_list = []
+		for x in real_hours:
+			time_list.append(x['real_hours'])
+		time1 = np.array(time_list)
+		time = np.reshape(time1, (-1,1))
+
+		real_cost = tuple(Task.objects.values('real_cost'))
+		cost_list = []
+		for y in real_cost:
+			cost_list.append(y['real_cost'])
+		cost = np.array(cost_list)
+
+		# Construct the Linear Rergession model
+		reg = linear_model.LinearRegression()
+		reg.fit(time, cost) # This line makes the Linear Regression model learn from the data
+		m = reg.coef_[0]
+		b = reg.intercept_
+
+		# Make prediction with data from user
+		D = decimal.Decimal
+		predictant = request.POST.get('time')
+		predictant = D(predictant)
+		result = reg.predict(X=predictant)
+		result = round(result.item(0))
+		data = {'message': "%s" % result}
 		return HttpResponse(json.dumps(data), content_type='application/json')
 	else:
 		raise Http404

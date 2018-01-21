@@ -7,7 +7,7 @@ $(document).ready(function(){
 			dataType: "json",
 			data: {"time": $('#hours').val() },
 			success: function(data){
-				$('#hours').notify("This task will cost " + data.message, "success");
+				$('#hours').notify("This task will cost $" + data.message + " mexican pesos.", "success");
 			}
 		});
 	});
