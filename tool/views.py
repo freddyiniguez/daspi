@@ -7,6 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Project, Estimate, Task, Effort, Cost
 from .forms import ProjectForm, EstimateForm, TaskForm, EffortForm, CostForm
 from django.contrib import messages
+from django.http import Http404, HttpResponse
 
 # Imports for data analysis
 import numpy as np 
@@ -211,11 +212,11 @@ def task_visualize(request, pk):
 # Predicts cost from an estimated time for a task
 @login_required
 def task_predict(request):
-	if request.method == 'POST' and request.is_ajax():
-		time = request.POST.get('time')
-		return HttpResponse(json.dumps({'time': time}), content_type="application/json")
+	if request.is_ajax() and request.POST:
+		data = {'message': "%s" % request.POST.get('time')}
+		return HttpResponse(json.dumps(data), content_type='application/json')
 	else:
-		return render_to_response('tool/help.html', locals())
+		raise Http404
 
 # - - - E F F O R T S - - - #
 # Creates a new effort
