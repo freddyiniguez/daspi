@@ -1,3 +1,5 @@
+import matplotlib as mpl
+mpl.use('Agg')
 import os
 import glob
 import json
@@ -19,10 +21,8 @@ from numpy.random import randn
 from scipy import stats
 
 # Imports for plotting
-import matplotlib as mpl 
 import matplotlib.pyplot as plt 
 import seaborn as sns 
-
 # Imports for Linear Regression
 from sklearn import linear_model
 
